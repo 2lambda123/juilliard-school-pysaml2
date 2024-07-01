@@ -183,7 +183,10 @@ class HTTPBase(object):
                             std_attr[attr] = morsel[attr]
                 elif attr == "max-age":
                     if morsel["max-age"]:
-                        std_attr["expires"] = time.time() + int(morsel["max-age"])
+                        try:
+                            std_attr["expires"] = time.time() + int(morsel["max-age"])
+                        except ValueError:
+                            std_attr["expires"] = time.time() + int(0)
 
             for att, item in PAIRS.items():
                 if std_attr[att]:
